@@ -10,7 +10,8 @@ export default class Readon extends React.Component {
     this.state = {
       files: list,
       currentPage: 1,
-      lastPage: list.size
+      lastPage: list.size,
+      isThumbsVisibled: false
     }
   }
 
@@ -50,6 +51,11 @@ export default class Readon extends React.Component {
       this.setState({
         currentPage: current
       })
+    } else if (e.key == "t") {
+      var isVisibled = !this.state.isThumbsVisibled
+      this.setState({
+        isThumbsVisibled: isVisibled
+      })
     }
   }
 
@@ -75,6 +81,9 @@ export default class Readon extends React.Component {
   }
 
   _showThumbs() {
+    if (!this.state.isThumbsVisibled) {
+      return
+    }
     const list = this.state.files.map((f, i) => {
       return <li key={i} className="thumb-item" onClick={(e) => this._thumbClicked(i)}><img src={f}/></li>
     })
