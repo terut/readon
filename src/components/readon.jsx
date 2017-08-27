@@ -38,16 +38,13 @@ export default class Readon extends React.Component {
   }
 
   _keyInputed(e) {
-    console.log(e.key)
     if (e.key == "ArrowRight" && this.state.currentPage > 1) {
       var current = this.state.currentPage == 2 ? 1 : this.state.currentPage - 2
-      console.log(current)
       this.setState({
         currentPage: current
       })
     } else if (e.key == "ArrowLeft" && this.state.lastPage > this.state.currentPage) {
       var current = this.state.currentPage == this.state.lastPage - 1 ? this.state.currentPage + 1 : this.state.currentPage + 2
-      console.log(current)
       this.setState({
         currentPage: current
       })
@@ -67,11 +64,12 @@ export default class Readon extends React.Component {
 
   _showImages() {
     var isOdd = (this.state.currentPage == this.state.lastPage)
+    var left = isOdd ? null : <img src={this.state.files.get(this.state.currentPage)} />
 
     return (
       <div className="images">
         <div className="left">
-          <img src={isOdd ? "" : this.state.files.get(this.state.currentPage)} />
+          {left}
         </div>
         <div className="right">
           <img src={this.state.files.get(this.state.currentPage - 1)} />
@@ -82,7 +80,7 @@ export default class Readon extends React.Component {
 
   _showThumbs() {
     if (!this.state.isThumbsVisibled) {
-      return
+      return null
     }
     const list = this.state.files.map((f, i) => {
       return <li key={i} className="thumb-item" onClick={(e) => this._thumbClicked(i)}><img src={f}/></li>
