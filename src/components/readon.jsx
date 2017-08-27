@@ -53,6 +53,12 @@ export default class Readon extends React.Component {
     }
   }
 
+  _thumbClicked(i) {
+    this.setState({
+      currentPage: i + 1
+    })
+  }
+
   _showImages() {
     var isOdd = (this.state.currentPage == this.state.lastPage)
 
@@ -68,9 +74,17 @@ export default class Readon extends React.Component {
      )
   }
 
+  _showThumbs() {
+    const list = this.state.files.map((f, i) => {
+      return <li key={i} className="thumb-item" onClick={(e) => this._thumbClicked(i)}><img src={f}/></li>
+    })
+    return <div className="thumbs"><ul>{list}</ul></div>
+  }
+
   render() {
     return (
       <div tabIndex="0" id="container" onDragOver={(e) => e.preventDefault()} onDrop={(e) => this._fileDroped(e)} onKeyDown={(e) => this._keyInputed(e)}>
+        { this.state.lastPage > 0 ? this._showThumbs() : "" }
         { this.state.lastPage > 0 ? this._showImages() : "" }
       </div>
     )
