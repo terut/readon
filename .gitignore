@@ -4,3 +4,4 @@ renderer.*
 assets/*
 *.swp
 readon-*
+.DS_Store
